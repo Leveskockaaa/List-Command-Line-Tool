@@ -1,6 +1,8 @@
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,13 +14,29 @@ public class Main {
             return;
         }
 
+        int maxLength = 0;
+        for (File file : files) {
+            if (file.isHidden()) continue;
+            if (String.valueOf(file.length()).length() > maxLength) {
+                maxLength = String.valueOf(file.length()).length();
+            }
+        }
+
+        List<LineFormat> lines = new ArrayList<>();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         for (File file : files) {
             if (file.isHidden()) continue;
+
+            String permission = (file.isDirectory() ? "d" : "-") + (file.canRead() ? "r" : "-") + (file.canWrite() ? "w" : "-") + (file.canExecute() ? "x" : "-");
+            String modified = sdf.format(new Date(file.lastModified()));
+            long length = file.length();
             String name = file.getName();
-            String lastModified = sdf.format(new Date(file.lastModified()));
-            String permissions = (file.canRead() ? "r" : "-") + (file.canWrite() ? "w" : "-") + (file.canExecute() ? "x" : "-");
-            System.out.println("> " + permissions + " " + lastModified + " " + name);
+
+            lines.add(new LineFormat(permission, modified, length, maxLength, name));
+        }
+
+        for (LineFormat lineFormat : lines) {
+            System.out.println(lineFormat);
         }
     }
 }
