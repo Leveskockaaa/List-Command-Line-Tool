@@ -1,3 +1,5 @@
+import java.util.Comparator;
+
 public class LineFormat {
     private final String filePermission;
     private final String fileModified;
@@ -11,6 +13,18 @@ public class LineFormat {
         this.fileSize = fileSize;
         this.maxLength = maxLength;
         this.fileName = fileName;
+    }
+
+    public String getFileModified() {
+        return fileModified;
+    }
+
+    public long getFileSize() {
+        return fileSize;
+    }
+
+    public String getFileName() {
+        return fileName;
     }
 
     public String toString() {

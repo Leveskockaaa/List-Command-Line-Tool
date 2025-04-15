@@ -1,8 +1,6 @@
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -34,6 +32,8 @@ public class Main {
 
             lines.add(new LineFormat(permission, modified, length, maxLength, name));
         }
+
+        lines.sort(new FileNameComparator());
 
         for (LineFormat lineFormat : lines) {
             System.out.println(lineFormat);
