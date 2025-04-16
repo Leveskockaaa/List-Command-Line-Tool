@@ -1,5 +1,3 @@
-import java.util.Comparator;
-
 public class LineFormat {
     private final String filePermission;
     private final String fileModified;
@@ -27,6 +25,7 @@ public class LineFormat {
         return fileName;
     }
 
+    @Override
     public String toString() {
         int difference = (int)(maxLength - String.valueOf(fileSize).length());
         return "> " + filePermission + " " + fileModified + " " + " ".repeat(difference) + fileSize + " " + fileName;
