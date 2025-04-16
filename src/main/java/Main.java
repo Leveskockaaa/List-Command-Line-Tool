@@ -16,8 +16,8 @@ public class Main {
 
         int sortArguments = 0;
         for (String argument : args) {
-            if (!validShowArguments.contains(argument) || !validSortArguments.contains(argument)) {
-                System.err.println("> Invalid arguments found!");
+            if (!validShowArguments.contains(argument) && !validSortArguments.contains(argument)) {
+                System.err.println("> Invalid arguments");
                 return;
             }
             if (validSortArguments.contains(argument)) {
@@ -26,6 +26,7 @@ public class Main {
         }
         if (sortArguments > 1) {
             System.err.println("> Only one sort argument is allowed");
+            return;
         }
         
         FileList listOfFiles = new FileList(files, args);

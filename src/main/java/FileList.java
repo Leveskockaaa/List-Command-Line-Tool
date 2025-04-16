@@ -8,13 +8,13 @@ import java.util.List;
 
 public class FileList {
     private List<LineFormat> listOfFiles = new ArrayList<>();
-    private List<File> files = new ArrayList<>();
-    List<String> arguments = new ArrayList<>();
+    private List<File> files;
+    List<String> arguments;
     private int maxLength = 0;
 
     public FileList(File[] files, String[] arguments) {
-        this.files = Arrays.asList(files);
-        this.arguments = Arrays.asList(arguments);
+        this.files = new ArrayList<>(Arrays.asList(files));
+        this.arguments = new ArrayList<>(Arrays.asList(arguments));
     }
 
     public void filterFiles() {
@@ -44,8 +44,6 @@ public class FileList {
     public void selectFiles() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         for (File file : files) {
-            if (file.isHidden()) continue;
-
             String permission = (file.isDirectory() ? "d" : "-") + (file.canRead() ? "r" : "-") + (file.canWrite() ? "w" : "-") + (file.canExecute() ? "x" : "-");
             String modified = sdf.format(new Date(file.lastModified()));
             long length = file.length();
