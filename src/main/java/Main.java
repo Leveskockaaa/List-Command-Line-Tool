@@ -1,44 +1,38 @@
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Main {
+    static List<String> validShowArguments = List.of( "-hidden", "-dirs" );
+    static List<String> validSortArguments = List.of( "-size", "-date" );
+
     public static void main(String[] args) {
         File currentDirectory = new File(".");
         File[] files = currentDirectory.listFiles();
 
         if (files == null) {
-            System.out.println("No files found");
+            System.err.println("> No files found");
             return;
         }
 
-        int maxLength = 0;
-        for (File file : files) {
-            if (file.isHidden()) continue;
-            if (String.valueOf(file.length()).length() > maxLength) {
-                maxLength = String.valueOf(file.length()).length();
+        int sortArguments = 0;
+        for (String argument : args) {
+            if (!validShowArguments.contains(argument) || !validSortArguments.contains(argument)) {
+                System.err.println("> Invalid arguments found!");
+                return;
+            }
+            if (validSortArguments.contains(argument)) {
+                sortArguments++;
             }
         }
-
-        List<LineFormat> lines = new ArrayList<>();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        for (File file : files) {
-            if (file.isHidden()) continue;
-
-            String permission = (file.isDirectory() ? "d" : "-") + (file.canRead() ? "r" : "-") + (file.canWrite() ? "w" : "-") + (file.canExecute() ? "x" : "-");
-            String modified = sdf.format(new Date(file.lastModified()));
-            long length = file.length();
-            String name = file.getName();
-
-            lines.add(new LineFormat(permission, modified, length, maxLength, name));
+        if (sortArguments > 1) {
+            System.err.println("> Only one sort argument is allowed");
         }
-
-        lines.sort(new FileNameComparator());
-
-        for (LineFormat lineFormat : lines) {
-            System.out.println(lineFormat);
-        }
+        
+        FileList listOfFiles = new FileList(files, args);
+        listOfFiles.filterFiles();
+        listOfFiles.calculateMaxLength();
+        listOfFiles.selectFiles();
+        listOfFiles.sortFiles();
+        listOfFiles.printFiles();
     }
 }

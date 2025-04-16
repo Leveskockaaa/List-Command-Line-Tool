@@ -1,0 +1,75 @@
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+
+public class FileList {
+    private List<LineFormat> listOfFiles = new ArrayList<>();
+    private List<File> files = new ArrayList<>();
+    List<String> arguments = new ArrayList<>();
+    private int maxLength = 0;
+
+    public FileList(File[] files, String[] arguments) {
+        this.files = Arrays.asList(files);
+        this.arguments = Arrays.asList(arguments);
+    }
+
+    public void filterFiles() {
+        Iterator<File> fileIterator = files.iterator();
+        while (fileIterator.hasNext()) {
+            File file = fileIterator.next();
+
+            if (!arguments.contains("-hidden") && file.isHidden()) {
+                fileIterator.remove();
+            }
+
+            if (arguments.contains("-dirs") && !file.isDirectory()) {
+                fileIterator.remove();
+            }
+        }
+    }
+
+    public void calculateMaxLength() {
+        for (File file : files) {
+            if (file.isHidden()) continue;
+            if (String.valueOf(file.length()).length() > maxLength) {
+                maxLength = String.valueOf(file.length()).length();
+            }
+        }
+    }
+
+    public void selectFiles() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        for (File file : files) {
+            if (file.isHidden()) continue;
+
+            String permission = (file.isDirectory() ? "d" : "-") + (file.canRead() ? "r" : "-") + (file.canWrite() ? "w" : "-") + (file.canExecute() ? "x" : "-");
+            String modified = sdf.format(new Date(file.lastModified()));
+            long length = file.length();
+            String name = file.getName();
+
+            listOfFiles.add(new LineFormat(permission, modified, length, maxLength, name));
+        }
+    }
+
+    public void sortFiles() {
+        if (arguments.contains("-size")) {
+            listOfFiles.sort(new FileSizeComparator());
+            return;
+        }
+        if (arguments.contains("-date")) {
+            listOfFiles.sort(new FileDateComparator());
+            return;
+        }
+        listOfFiles.sort(new FileNameComparator());
+    }
+
+    public void printFiles() {
+        for (LineFormat line : listOfFiles) {
+            System.out.println(line);
+        }
+    }
+}
