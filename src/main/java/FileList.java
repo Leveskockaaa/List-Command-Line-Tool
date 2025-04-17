@@ -7,8 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 
 public class FileList {
-    private List<LineFormat> listOfFiles = new ArrayList<>();
-    private List<File> files;
+    private final List<LineFormat> listOfFiles = new ArrayList<>();
+    private final List<File> files;
     List<String> arguments;
     private int maxLength = 0;
 
