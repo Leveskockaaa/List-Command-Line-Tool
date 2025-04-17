@@ -21,16 +21,20 @@ public class FileList {
         Iterator<File> fileIterator = files.iterator();
         while (fileIterator.hasNext()) {
             File file = fileIterator.next();
-
+    
+            boolean remove = false;
             if (!arguments.contains("-hidden") && file.isHidden()) {
-                fileIterator.remove();
-            }
-
+                remove = true;
+            }    
             if (arguments.contains("-dirs") && !file.isDirectory()) {
+                remove = true;
+            }
+            if (remove) {
                 fileIterator.remove();
             }
         }
     }
+    
 
     public void calculateMaxLength() {
         for (File file : files) {
