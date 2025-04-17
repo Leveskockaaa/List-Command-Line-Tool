@@ -25,7 +25,7 @@ These arguments allow you to sort the files based on different criteria.
 ### **Example usages**
 
 ```bash
-list - hidden -dirs -date
+list -hidden -dirs -date
 ```
 
 ## **Installation**
