@@ -1,3 +1,5 @@
+package service;
+
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -6,13 +8,17 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
-public class FileList {
-    private final List<LineFormat> listOfFiles = new ArrayList<>();
+import comparator.FileDateComparator;
+import comparator.FileNameComparator;
+import comparator.FileSizeComparator;
+import model.FileInfo;
+
+public class FileManager {
+    private final List<FileInfo> listOfFiles = new ArrayList<>();
     private final List<File> files;
     List<String> arguments;
-    private int maxLength = 0;
 
-    public FileList(File[] files, String[] arguments) {
+    public FileManager(File[] files, String[] arguments) {
         this.files = new ArrayList<>(Arrays.asList(files));
         this.arguments = new ArrayList<>(Arrays.asList(arguments));
     }
@@ -37,12 +43,13 @@ public class FileList {
     
 
     public void calculateMaxLength() {
+        long maxLength = 0;
         for (File file : files) {
-            if (file.isHidden()) continue;
             if (String.valueOf(file.length()).length() > maxLength) {
                 maxLength = String.valueOf(file.length()).length();
             }
         }
+        FileInfo.setMaxLength(maxLength);
     }
 
     public void selectFiles() {
@@ -53,7 +60,7 @@ public class FileList {
             long length = file.length();
             String name = file.getName();
 
-            listOfFiles.add(new LineFormat(permission, modified, length, maxLength, name));
+            listOfFiles.add(new FileInfo(permission, modified, length, name));
         }
     }
 
@@ -70,7 +77,7 @@ public class FileList {
     }
 
     public void printFiles() {
-        for (LineFormat line : listOfFiles) {
+        for (FileInfo line : listOfFiles) {
             System.out.println(line);
         }
     }

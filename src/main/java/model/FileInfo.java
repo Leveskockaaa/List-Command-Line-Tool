@@ -1,15 +1,16 @@
-public class LineFormat {
+package model;
+
+public class FileInfo {
     private final String filePermission;
     private final String fileModified;
     private final long fileSize;
-    private final long maxLength;
+    private static long maxLength;
     private final String fileName;
 
-    public LineFormat(String filePermission, String fileModified, long fileSize, long maxLength, String fileName) {
+    public FileInfo(String filePermission, String fileModified, long fileSize, String fileName) {
         this.filePermission = filePermission;
         this.fileModified = fileModified;
         this.fileSize = fileSize;
-        this.maxLength = maxLength;
         this.fileName = fileName;
     }
 
@@ -23,6 +24,10 @@ public class LineFormat {
 
     public String getFileName() {
         return fileName;
+    }
+
+    public static void setMaxLength(long length) {
+        maxLength = length;
     }
 
     @Override

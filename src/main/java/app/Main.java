@@ -1,5 +1,9 @@
+package app;
+
 import java.io.File;
 import java.util.List;
+
+import service.FileManager;
 
 public class Main {
     static List<String> validShowArguments = List.of( "-hidden", "-dirs" );
@@ -29,7 +33,7 @@ public class Main {
             return;
         }
         
-        FileList listOfFiles = new FileList(files, args);
+        FileManager listOfFiles = new FileManager(files, args);
         listOfFiles.filterFiles();
         listOfFiles.calculateMaxLength();
         listOfFiles.selectFiles();
