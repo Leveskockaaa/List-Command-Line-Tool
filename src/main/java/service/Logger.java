@@ -11,4 +11,16 @@ public class Logger {
     public static void logError(String message) {
         System.out.println("[" + RED + "ERROR" + RESET + "] " + message);
     }
+
+    public static void logInfo(String message) {
+        System.out.println("[" + INFO + "INFO" + RESET + "] " + message);
+    }
+
+    public static void logSuccess(String message) {
+        System.out.println("[" + GREEN + "SUCCESS" + RESET + "] " + message);
+    }
+
+    public static void logWarning(String message) {
+        System.out.println("[" + RED + "WARNING" + RESET + "] " + message);
+    }
 }

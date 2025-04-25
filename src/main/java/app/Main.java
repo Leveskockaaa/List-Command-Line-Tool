@@ -15,7 +15,7 @@ public class Main {
         File[] files = currentDirectory.listFiles();
 
         if (files == null) {
-            Logger.logError("No files found in the current directory.");
+            Logger.logInfo("No files found in the current directory.");
             return;
         }
 
@@ -30,7 +30,7 @@ public class Main {
             }
         }
         if (sortArguments > 1) {
-            Logger.logError("Only one sort argument is allowed");
+            Logger.logWarning("Only one sort argument is allowed");
             return;
         }
         
