@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import service.FileManager;
+import service.Logger;
 
 public class Main {
     static List<String> validShowArguments = List.of( "-hidden", "-dirs" );
@@ -14,14 +15,14 @@ public class Main {
         File[] files = currentDirectory.listFiles();
 
         if (files == null) {
-            System.err.println("> No files found");
+            Logger.logError("No files found in the current directory.");
             return;
         }
 
         int sortArguments = 0;
         for (String argument : args) {
             if (!validShowArguments.contains(argument) && !validSortArguments.contains(argument)) {
-                System.err.println("> Invalid arguments");
+                Logger.logError("Invalid arguments");
                 return;
             }
             if (validSortArguments.contains(argument)) {
@@ -29,7 +30,7 @@ public class Main {
             }
         }
         if (sortArguments > 1) {
-            System.err.println("> Only one sort argument is allowed");
+            Logger.logError("Only one sort argument is allowed");
             return;
         }
         

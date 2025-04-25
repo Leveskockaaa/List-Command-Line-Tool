@@ -6,12 +6,18 @@ public class FileInfo {
     private final long fileSize;
     private static long maxLength;
     private final String fileName;
+    private final FileType fileType;
 
-    public FileInfo(String filePermission, String fileModified, long fileSize, String fileName) {
+    public FileInfo(FileType fileType, String filePermission, String fileModified, long fileSize, String fileName) {
         this.filePermission = filePermission;
         this.fileModified = fileModified;
         this.fileSize = fileSize;
         this.fileName = fileName;
+        this.fileType = fileType;
+    }
+
+    public String getFilePermission() {
+        return filePermission;
     }
 
     public String getFileModified() {
@@ -26,6 +32,10 @@ public class FileInfo {
         return fileName;
     }
 
+    public FileType getFileType() {
+        return fileType;
+    }
+
     public static void setMaxLength(long length) {
         maxLength = length;
     }
@@ -33,6 +43,6 @@ public class FileInfo {
     @Override
     public String toString() {
         int difference = (int)(maxLength - String.valueOf(fileSize).length());
-        return "> " + filePermission + " " + fileModified + " " + " ".repeat(difference) + fileSize + " " + fileName;
+        return "> " + filePermission + " " + fileModified + " " + " ".repeat(difference) + fileSize + " " + fileType.getColorCode() + fileName + "\u001B[0m";
     }
 }

@@ -12,6 +12,7 @@ import comparator.FileDateComparator;
 import comparator.FileNameComparator;
 import comparator.FileSizeComparator;
 import model.FileInfo;
+import model.FileType;
 
 public class FileManager {
     private final List<FileInfo> listOfFiles = new ArrayList<>();
@@ -59,8 +60,9 @@ public class FileManager {
             String modified = sdf.format(new Date(file.lastModified()));
             long length = file.length();
             String name = file.getName();
+            FileType type = FileType.getFileType(file);
 
-            listOfFiles.add(new FileInfo(permission, modified, length, name));
+            listOfFiles.add(new FileInfo(type ,permission, modified, length, name));
         }
     }
 
