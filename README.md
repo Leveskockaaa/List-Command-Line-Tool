@@ -30,11 +30,6 @@ list -hidden -dirs -date
 
 ## **Installation**
 
-### **Dependencies**
-
-- JDK 21 or latest  
-- Maven 3.6 or latest
-
 ### **Clone the repository**
 
 Clone the repository with the following command:
@@ -48,21 +43,8 @@ git clone https://github.com/Leveskockaaa/List-Command-Line-Tool.git
 Go to the root directory and run the following command:  
 
 ```sh
-mvn compile
-```
-
-### **Compile the source code with javac**
-
-Go to the root directory and run the following command:  
-
-```sh
-javac -d target/classes/ src/main/java/*.java
-```
-
-### **Run the code**
-
-```sh
-java -cp /path/to/root/directory/target/classes/ Main
+mvn clean install # install dependencies
+mvn package # create an executeable jar file
 ```
 
 ### **Add to list of commands on Linux**
@@ -71,6 +53,6 @@ Edit your `.bashrc` file, and put the following lines somewhere in the file:
 
 ```bash
 function list() {
-    java -cp /path/to/root/directory/target/classes Main "$@"
+  java -jar /path/to/root/directory/target/list-command-line-tool-1.0.0-jar-with-dependencies.jar  "$@"
 }
 ```

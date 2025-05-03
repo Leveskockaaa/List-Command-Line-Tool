@@ -42,7 +42,6 @@ public class FileManager {
         }
     }
     
-
     public void calculateMaxLength() {
         long maxLength = 0;
         for (File file : files) {
@@ -62,7 +61,7 @@ public class FileManager {
             String name = file.getName();
             FileType type = FileType.getFileType(file);
 
-            listOfFiles.add(new FileInfo(type ,permission, modified, length, name));
+            listOfFiles.add(new FileInfo(type, permission, modified, length, name));
         }
     }
 
